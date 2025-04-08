@@ -13,7 +13,7 @@ import Point from "https://js.arcgis.com/4.29/@arcgis/core/geometry/Point.js";
 
 // Step 1: OAuth Setup
 const oauthInfo = new OAuthInfo({
-  appId: "YOUR_CLIENT_ID", // Replace with your ArcGIS Online OAuth app's Client ID
+  appId: "cckj9k4jKTQyM5fe", // Client ID
   popup: true,
   popupCallbackUrl: "oauth-callback.html"
 });

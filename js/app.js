@@ -20,7 +20,8 @@ IdentityManager.registerOAuthInfos([oauthInfo]);
 
 IdentityManager.checkSignInStatus(oauthInfo.portalUrl + "/sharing")
   .then(initializeMap)
-  .catch(() => {
+  .catch((err) => {
+    console.error("OAuth Check Error: ", err);
     IdentityManager.getCredential(oauthInfo.portalUrl + "/sharing")
       .then(initializeMap)
       .catch((err) => console.error("OAuth Error:", err));

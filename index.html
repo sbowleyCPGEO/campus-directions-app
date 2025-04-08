@@ -51,4 +51,49 @@
     const startPoint = new Graphic({
       geometry: new Point({
         longitude: -118.4600, // Example coordinates for the start point
-        latitude:
+        latitude: 34.0650
+      }),
+      symbol: {
+        type: "simple-marker", // A simple circle marker for the point
+        color: "blue"
+      }
+    });
+
+    const endPoint = new Graphic({
+      geometry: new Point({
+        longitude: -118.4500, // Example coordinates for the end point (adjust as needed)
+        latitude: 34.0705
+      }),
+      symbol: {
+        type: "simple-marker", // A simple circle marker for the point
+        color: "green"
+      }
+    });
+
+    // Add the points to the graphics layer
+    graphicsLayer.add(startPoint);
+    graphicsLayer.add(endPoint);
+
+    // Create RouteLayer to visualize the route
+    const routeLayer = new RouteLayer();
+
+    // Add RouteLayer to the map
+    map.add(routeLayer);
+
+    // Set up the Directions widget
+    const directionsWidget = new Directions({
+      view: view,
+      routeServiceUrls: [
+        "https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World" // Esri World Routing Service
+      ],
+      travelMode: TravelMode.walking, // Walking directions by default
+      stops: [startPoint, endPoint], // Define stops for the route
+      routeLayer: routeLayer // Assign RouteLayer to the Directions widget
+    });
+
+    // Add Directions widget to the top-right corner of the map
+    view.ui.add(directionsWidget, "top-right");
+
+  </script>
+</body>
+</html>

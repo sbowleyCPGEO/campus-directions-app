@@ -1,12 +1,33 @@
 <!DOCTYPE html>
-<html>
-  <head><title>OAuth Callback</title></head>
-  <body>
-    <script>
-      window.opener.require(["esri/identity/IdentityManager"], function (IdentityManager) {
-        IdentityManager.registerToken(window.location.href);
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OAuth Callback</title>
+  <script src="https://js.arcgis.com/4.32/"></script>
+  <script>
+    // Get the query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+    const state = urlParams.get('state');
+    
+    // Ensure we have the code and state
+    if (code && state) {
+      // Send the code and state back to the opener window
+      if (window.opener) {
+        window.opener.postMessage({
+          type: "oauth_callback",
+          code: code,
+          state: state
+        }, window.location.origin);
+        // Close the popup after sending the data
         window.close();
-      });
-    </script>
-  </body>
+      }
+    } else {
+      console.error("OAuth code or state missing.");
+    }
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
 </html>

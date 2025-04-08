@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head><title>OAuth Callback</title></head>
+  <body>
+    <script>
+      window.opener.require(["esri/identity/IdentityManager"], function (IdentityManager) {
+        IdentityManager.registerToken(window.location.href);
+        window.close();
+      });
+    </script>
+  </body>
+</html>

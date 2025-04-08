@@ -1,15 +1,15 @@
-import esriConfig from "https://js.arcgis.com/4.29/@arcgis/core/config.js";
-import IdentityManager from "https://js.arcgis.com/4.29/@arcgis/core/identity/IdentityManager.js";
-import OAuthInfo from "https://js.arcgis.com/4.29/@arcgis/core/identity/OAuthInfo.js";
+import esriConfig from "https://js.arcgis.com/4.32/@arcgis/core/config.js";
+import IdentityManager from "https://js.arcgis.com/4.32/@arcgis/core/identity/IdentityManager.js";
+import OAuthInfo from "https://js.arcgis.com/4.32/@arcgis/core/identity/OAuthInfo.js";
 
-import Map from "https://js.arcgis.com/4.29/@arcgis/core/Map.js";
-import MapView from "https://js.arcgis.com/4.29/@arcgis/core/views/MapView.js";
-import Graphic from "https://js.arcgis.com/4.29/@arcgis/core/Graphic.js";
-import GraphicsLayer from "https://js.arcgis.com/4.29/@arcgis/core/layers/GraphicsLayer.js";
-import RouteTask from "https://js.arcgis.com/4.29/@arcgis/core/tasks/RouteTask.js";
-import RouteParameters from "https://js.arcgis.com/4.29/@arcgis/core/tasks/support/RouteParameters.js";
-import FeatureSet from "https://js.arcgis.com/4.29/@arcgis/core/tasks/support/FeatureSet.js";
-import Point from "https://js.arcgis.com/4.29/@arcgis/core/geometry/Point.js";
+import Map from "https://js.arcgis.com/4.32/@arcgis/core/Map.js";
+import MapView from "https://js.arcgis.com/4.32/@arcgis/core/views/MapView.js";
+import Graphic from "https://js.arcgis.com/4.32/@arcgis/core/Graphic.js";
+import GraphicsLayer from "https://js.arcgis.com/4.32/@arcgis/core/layers/GraphicsLayer.js";
+import RouteTask from "https://js.arcgis.com/4.32/@arcgis/core/tasks/RouteTask.js";
+import RouteParameters from "https://js.arcgis.com/4.32/@arcgis/core/tasks/support/RouteParameters.js";
+import FeatureSet from "https://js.arcgis.com/4.32/@arcgis/core/tasks/support/FeatureSet.js";
+import Point from "https://js.arcgis.com/4.32/@arcgis/core/geometry/Point.js";
 
 // Step 1: OAuth Setup
 const oauthInfo = new OAuthInfo({

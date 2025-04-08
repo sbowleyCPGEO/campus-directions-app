@@ -8,14 +8,14 @@ import GraphicsLayer from "https://js.arcgis.com/4.32/@arcgis/core/layers/Graphi
 import Directions from "https://js.arcgis.com/4.32/@arcgis/core/widgets/Directions.js";
 import TravelMode from "https://js.arcgis.com/4.32/@arcgis/core/rest/support/TravelMode.js";
 import Point from "https://js.arcgis.com/4.32/@arcgis/core/geometry/Point.js";
-import LayerList from "https://js.arcgis.com/4.32/@arcgis/core/widgets/LayerList.js";
 
-// Step 1: OAuth Setup
+// OAuth Setup
 const oauthInfo = new OAuthInfo({
   appId: "cckj9k4jKTQyM5fe", // Client ID
   popup: true,
-  popupCallbackUrl: "oauth-callback.html"
+  popupCallbackUrl: "oauth-callback.html" // Ensure this file exists and is configured properly
 });
+
 IdentityManager.registerOAuthInfos([oauthInfo]);
 
 IdentityManager.checkSignInStatus(oauthInfo.portalUrl + "/sharing")
@@ -26,7 +26,7 @@ IdentityManager.checkSignInStatus(oauthInfo.portalUrl + "/sharing")
       .catch((err) => console.error("OAuth Error:", err));
   });
 
-// Step 2: Map + Directions Widget Logic
+// Initialize Map
 function initializeMap() {
   const map = new Map({
     basemap: "streets-navigation-vector"
@@ -42,8 +42,11 @@ function initializeMap() {
   // Create Directions Widget
   const directionsWidget = new Directions({
     view: view,
-    routeServiceUrl: "https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World", // World Routing Service
-    travelMode: TravelMode.walking, // You can set the travel mode to 'walking' or 'driving'
+    routeServiceUrls: [
+      "https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World", // Esri World Routing Service
+      "https://webmap.cloudpointgeo.com/cdptgis/rest/services/IndoorRouting/ACC_District_Routing_Service/NAServer" // Custom Pedestrian Routing Network
+    ],
+    travelMode: TravelMode.walking, // Set the default travel mode
     stops: [
       new Graphic({
         geometry: new Point({
@@ -59,7 +62,7 @@ function initializeMap() {
         }),
         symbol: { type: "simple-marker", color: "green" }
       })
-    ],
+    ]
   });
 
   // Add the Directions widget to the view

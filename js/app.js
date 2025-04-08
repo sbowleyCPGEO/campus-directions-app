@@ -12,6 +12,7 @@ import Point from "https://js.arcgis.com/4.32/@arcgis/core/geometry/Point.js";
 // OAuth Setup
 const oauthInfo = new OAuthInfo({
   appId: "cckj9k4jKTQyM5fe", // Client ID
+  portalUrl: "https://www.arcgis.com",
   popup: true,
   popupCallbackUrl: "https://sbowleycpgeo.github.io/campus-directions-app/oauth-callback.html" // Ensure this file exists and is configured properly
 });
@@ -26,6 +27,13 @@ IdentityManager.checkSignInStatus(oauthInfo.portalUrl + "/sharing")
       .then(initializeMap)
       .catch((err) => console.error("OAuth Error:", err));
   });
+
+IdentityManager.getCredential("https://www.arcgis.com/sharing")
+  .then((credential) => {
+    console.log("Credential:", credential);
+    initializeMap();
+  })
+  .catch((err) => console.error("OAuth Error:", err));
 
 // Initialize Map
 function initializeMap() {

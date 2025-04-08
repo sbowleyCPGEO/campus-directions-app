@@ -56,4 +56,3 @@ const layerList = new LayerList({
   view: view
 });
 view.ui.add(layerList, "bottom-right");
-

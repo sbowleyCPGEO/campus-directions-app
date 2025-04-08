@@ -1,15 +1,14 @@
 import esriConfig from "https://js.arcgis.com/4.32/@arcgis/core/config.js";
 import IdentityManager from "https://js.arcgis.com/4.32/@arcgis/core/identity/IdentityManager.js";
 import OAuthInfo from "https://js.arcgis.com/4.32/@arcgis/core/identity/OAuthInfo.js";
-
 import Map from "https://js.arcgis.com/4.32/@arcgis/core/Map.js";
 import MapView from "https://js.arcgis.com/4.32/@arcgis/core/views/MapView.js";
 import Graphic from "https://js.arcgis.com/4.32/@arcgis/core/Graphic.js";
 import GraphicsLayer from "https://js.arcgis.com/4.32/@arcgis/core/layers/GraphicsLayer.js";
-import RouteTask from "https://js.arcgis.com/4.32/@arcgis/core/rest/support/RouteTask.js";
-import RouteParameters from "https://js.arcgis.com/4.32/@arcgis/core/rest/support/RouteParameters.js";
-import FeatureSet from "https://js.arcgis.com/4.32/@arcgis/core/rest/support/FeatureSet.js";
+import Directions from "https://js.arcgis.com/4.32/@arcgis/core/widgets/Directions.js";
+import TravelMode from "https://js.arcgis.com/4.32/@arcgis/core/rest/support/TravelMode.js";
 import Point from "https://js.arcgis.com/4.32/@arcgis/core/geometry/Point.js";
+import LayerList from "https://js.arcgis.com/4.32/@arcgis/core/widgets/LayerList.js";
 
 // Step 1: OAuth Setup
 const oauthInfo = new OAuthInfo({
@@ -27,68 +26,48 @@ IdentityManager.checkSignInStatus(oauthInfo.portalUrl + "/sharing")
       .catch((err) => console.error("OAuth Error:", err));
   });
 
-// Step 2: Map + Routing Logic
+// Step 2: Map + Directions Widget Logic
 function initializeMap() {
-  const map = new Map({ basemap: "streets-navigation-vector" });
+  const map = new Map({
+    basemap: "streets-navigation-vector"
+  });
 
   const view = new MapView({
     container: "viewDiv",
     map: map,
-    center: [-97.75, 30.25],
+    center: [-97.75, 30.25], // Adjust based on your campus location
     zoom: 15
   });
 
-  const routeLayer = new GraphicsLayer();
-  map.add(routeLayer);
-
-  const userStart = new Point({ longitude: -118.4600, latitude: 34.0650 }); // Example origin
-  const parking = new Point({ longitude: -118.4500, latitude: 34.0705 });   // Parking Structure 8
-  const destination = new Point({ longitude: -118.4426, latitude: 34.0722 }); // Royce Hall
-
-  // Driving directions using Esri's World Routing Service (OAuth now handles token)
-  const drivingRouteTask = new RouteTask({
-    url: "https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
+  // Create Directions Widget
+  const directionsWidget = new Directions({
+    view: view,
+    routeServiceUrl: "https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World", // World Routing Service
+    travelMode: TravelMode.walking, // You can set the travel mode to 'walking' or 'driving'
+    stops: [
+      new Graphic({
+        geometry: new Point({
+          longitude: -118.4600, // Example origin
+          latitude: 34.0650
+        }),
+        symbol: { type: "simple-marker", color: "blue" }
+      }),
+      new Graphic({
+        geometry: new Point({
+          longitude: -118.4500, // Parking Structure 8
+          latitude: 34.0705
+        }),
+        symbol: { type: "simple-marker", color: "green" }
+      })
+    ],
   });
 
-  const drivingParams = new RouteParameters({
-    stops: new FeatureSet({
-      features: [
-        new Graphic({ geometry: userStart }),
-        new Graphic({ geometry: parking })
-      ]
-    }),
-    returnDirections: true,
-    returnRoutes: true,
-    outSpatialReference: { wkid: 102100 }
+  // Add the Directions widget to the view
+  view.ui.add(directionsWidget, "top-right");
+
+  // Optional: Add other widgets like LayerList if needed
+  const layerList = new LayerList({
+    view: view
   });
-
-  drivingRouteTask.solve(drivingParams).then((result) => {
-    const route = result.routeResults[0].route;
-    route.symbol = { type: "simple-line", color: "blue", width: 3 };
-    routeLayer.add(route);
-  }).catch((err) => console.error("Driving Route Error:", err));
-
-  // Indoor/pedestrian walking route from parking to destination
-  const walkingRouteTask = new RouteTask({
-    url: "https://webmap.cloudpointgeo.com/cdptgis/rest/services/IndoorRouting/ACC_District_Routing_Service/NAServer"
-  });
-
-  const walkingParams = new RouteParameters({
-    stops: new FeatureSet({
-      features: [
-        new Graphic({ geometry: parking }),
-        new Graphic({ geometry: destination })
-      ]
-    }),
-    returnDirections: true,
-    returnRoutes: true,
-    outSpatialReference: { wkid: 102100 },
-    travelMode: "Walking"
-  });
-
-  walkingRouteTask.solve(walkingParams).then((result) => {
-    const route = result.routeResults[0].route;
-    route.symbol = { type: "simple-line", color: "green", width: 3 };
-    routeLayer.add(route);
-  }).catch((err) => console.error("Walking Route Error:", err));
+  view.ui.add(layerList, "bottom-right");
 }

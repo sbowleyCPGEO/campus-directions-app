@@ -28,6 +28,7 @@
     import Directions from "https://js.arcgis.com/4.32/@arcgis/core/widgets/Directions.js";
     import TravelMode from "https://js.arcgis.com/4.32/@arcgis/core/rest/support/TravelMode.js";
     import Point from "https://js.arcgis.com/4.32/@arcgis/core/geometry/Point.js";
+    import RouteLayer from "https://js.arcgis.com/4.32/@arcgis/core/layers/RouteLayer.js";  // Import RouteLayer
 
     // Create the map object
     const map = new Map({
@@ -73,6 +74,9 @@
     graphicsLayer.add(startPoint);
     graphicsLayer.add(endPoint);
 
+    // Create RouteLayer to visualize the route
+    const routeLayer = new RouteLayer();
+
     // Optional: Add Directions Widget
     const directionsWidget = new Directions({
       view: view,
@@ -80,11 +84,13 @@
         "https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World" // Esri World Routing Service
       ],
       travelMode: TravelMode.walking, // Walking directions by default
-      stops: [startPoint, endPoint] // Define stops for the route
+      stops: [startPoint, endPoint], // Define stops for the route
+      routeLayer: routeLayer // Assign RouteLayer to the Directions widget
     });
 
     // Add Directions widget to the top-right corner of the map
     view.ui.add(directionsWidget, "top-right");
+
   </script>
 </body>
 </html>

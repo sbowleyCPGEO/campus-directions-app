@@ -13,7 +13,7 @@ import Point from "https://js.arcgis.com/4.32/@arcgis/core/geometry/Point.js";
 const oauthInfo = new OAuthInfo({
   appId: "cckj9k4jKTQyM5fe", // Client ID
   popup: true,
-  popupCallbackUrl: "../oauth-callback.html" // Ensure this file exists and is configured properly
+  popupCallbackUrl: "https://sbowleycpgeo.github.io/campus-directions-app/oauth-callback.html" // Ensure this file exists and is configured properly
 });
 
 IdentityManager.registerOAuthInfos([oauthInfo]);

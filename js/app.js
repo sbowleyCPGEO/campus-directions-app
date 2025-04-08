@@ -8,6 +8,7 @@ import GraphicsLayer from "https://js.arcgis.com/4.32/@arcgis/core/layers/Graphi
 import Directions from "https://js.arcgis.com/4.32/@arcgis/core/widgets/Directions.js";
 import TravelMode from "https://js.arcgis.com/4.32/@arcgis/core/rest/support/TravelMode.js";
 import Point from "https://js.arcgis.com/4.32/@arcgis/core/geometry/Point.js";
+import LayerList from "https://js.arcgis.com/4.32/@arcgis/core/widgets/LayerList.js";
 
 // OAuth Setup
 const oauthInfo = new OAuthInfo({
@@ -19,6 +20,7 @@ const oauthInfo = new OAuthInfo({
 
 IdentityManager.registerOAuthInfos([oauthInfo]);
 
+// Check if user is already authenticated, else prompt for login
 IdentityManager.checkSignInStatus(oauthInfo.portalUrl + "/sharing")
   .then(initializeMap)
   .catch((err) => {
@@ -27,13 +29,6 @@ IdentityManager.checkSignInStatus(oauthInfo.portalUrl + "/sharing")
       .then(initializeMap)
       .catch((err) => console.error("OAuth Error:", err));
   });
-
-IdentityManager.getCredential("https://www.arcgis.com/sharing")
-  .then((credential) => {
-    console.log("Credential:", credential);
-    initializeMap();
-  })
-  .catch((err) => console.error("OAuth Error:", err));
 
 // Initialize Map
 function initializeMap() {
@@ -51,11 +46,19 @@ function initializeMap() {
   // Create Directions Widget
   const directionsWidget = new Directions({
     view: view,
-    routeServiceUrls: [
-      "https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World", // Esri World Routing Service
-      "https://webmap.cloudpointgeo.com/cdptgis/rest/services/IndoorRouting/ACC_District_Routing_Service/NAServer" // Custom Pedestrian Routing Network
-    ],
-    travelMode: TravelMode.walking, // Set the default travel mode
+    routeServiceUrl: "https://webmap.cloudpointgeo.com/cdptgis/rest/services/IndoorRouting/ACC_District_Routing_Service/NAServer", // Custom Pedestrian Routing Network
+    travelMode: {
+      type: "travel-mode",
+      name: "Walking",
+      impedanceAttributeName: "WalkTime",
+      timeAttributeName: "WalkTime",
+      distanceAttributeName: "Length",
+      description: "Walk time optimized travel mode",
+      useHierarchy: false,
+      restrictions: [],
+      attributeParameterValues: [],
+      type: "AUTOMODE"
+    },
     stops: [
       new Graphic({
         geometry: new Point({

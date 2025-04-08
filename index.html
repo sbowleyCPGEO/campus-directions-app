@@ -29,6 +29,7 @@
     import TravelMode from "https://js.arcgis.com/4.32/@arcgis/core/rest/support/TravelMode.js";
     import Point from "https://js.arcgis.com/4.32/@arcgis/core/geometry/Point.js";
     import RouteLayer from "https://js.arcgis.com/4.32/@arcgis/core/layers/RouteLayer.js";  // Import RouteLayer
+    import RouteTask from "https://js.arcgis.com/4.32/@arcgis/core/tasks/RouteTask.js";  // Import RouteTask
 
     // Create the map object
     const map = new Map({
@@ -80,6 +81,11 @@
     // Add RouteLayer to the map
     map.add(routeLayer);
 
+    // Create RouteTask to calculate the route
+    const routeTask = new RouteTask({
+      url: "https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World"
+    });
+
     // Set up the Directions widget
     const directionsWidget = new Directions({
       view: view,
@@ -93,6 +99,17 @@
 
     // Add Directions widget to the top-right corner of the map
     view.ui.add(directionsWidget, "top-right");
+
+    // Calculate the route and assign it to the routeLayer
+    routeTask.solve({
+      stops: [startPoint.geometry, endPoint.geometry]
+    }).then(function (result) {
+      // The result will contain the route geometry
+      const route = result.routeResults[0].route;
+      routeLayer.add(route);
+    }).catch(function (error) {
+      console.error("Route calculation error:", error);
+    });
 
   </script>
 </body>

@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Campus Routing App</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Directions</title>
+
+  <!-- Include ArcGIS JS API CSS -->
+  <link rel="stylesheet" href="https://js.arcgis.com/4.32/esri/themes/light/main.css">
+
   <style>
-    html, body, #viewDiv {
-      padding: 0;
-      margin: 0;
+    /* Set the size of the view container */
+    #viewDiv {
       height: 100%;
       width: 100%;
     }
   </style>
-  <!-- IMPORTANT: js/app.js is relative to index.html -->
-  <script type="module" src="js/app.js"></script>
 </head>
 <body>
+  <!-- Map Container -->
   <div id="viewDiv"></div>
+
+  <!-- Include ArcGIS JS API -->
+  <script src="https://js.arcgis.com/4.32/"></script>
+
+  <!-- Include the custom app.js file -->
+  <script src="js/app.js"></script>
 </body>
 </html>

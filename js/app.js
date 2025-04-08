@@ -8,7 +8,6 @@ import GraphicsLayer from "https://js.arcgis.com/4.32/@arcgis/core/layers/Graphi
 import Directions from "https://js.arcgis.com/4.32/@arcgis/core/widgets/Directions.js";
 import TravelMode from "https://js.arcgis.com/4.32/@arcgis/core/rest/support/TravelMode.js";
 import Point from "https://js.arcgis.com/4.32/@arcgis/core/geometry/Point.js";
-import LayerList from "https://js.arcgis.com/4.32/@arcgis/core/widgets/LayerList.js"; // Ensure LayerList is imported
 
 // Initialize Map and OAuth (disable OAuth if you want to skip authentication)
 const map = new Map({
@@ -50,9 +49,3 @@ const directionsWidget = new Directions({
 
 // Add the Directions widget to the view
 view.ui.add(directionsWidget, "top-right");
-
-// Optional: Add LayerList widget
-const layerList = new LayerList({
-  view: view
-});
-view.ui.add(layerList, "bottom-right");

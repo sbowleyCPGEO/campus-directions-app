@@ -47,7 +47,7 @@ drivingRouteTask.solve(drivingParams).then((result) => {
 });
 
 const walkingRouteTask = new RouteTask({
-  url: "https://your-server/arcgis/rest/services/CampusPedestrianRouting/NAServer/Route"
+  url: "https://webmap.cloudpointgeo.com/cdptgis/rest/services/IndoorRouting/ACC_District_Routing_Service/NAServer"
 });
 
 const walkingParams = new RouteParameters({

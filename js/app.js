@@ -19,9 +19,9 @@ const view = new MapView({
 const routeLayer = new GraphicsLayer();
 map.add(routeLayer);
 
-const userStart = new Point({ longitude: -97.8, latitude: 30.27 });
-const parking = new Point({ longitude: -97.75, latitude: 30.252 });
-const destination = new Point({ longitude: -97.748, latitude: 30.253 });
+const userStart = new Point({ longitude: -118.4600, latitude: 34.0650 }); // Example origin
+const parking = new Point({ longitude: -118.4500, latitude: 34.0705 });   // Parking Structure 8
+const destination = new Point({ longitude: -118.4426, latitude: 34.0722 }); // Royce Hall
 
 const drivingRouteTask = new RouteTask({
   url: "https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World",

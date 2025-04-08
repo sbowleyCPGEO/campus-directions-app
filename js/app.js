@@ -6,9 +6,9 @@ import Map from "https://js.arcgis.com/4.32/@arcgis/core/Map.js";
 import MapView from "https://js.arcgis.com/4.32/@arcgis/core/views/MapView.js";
 import Graphic from "https://js.arcgis.com/4.32/@arcgis/core/Graphic.js";
 import GraphicsLayer from "https://js.arcgis.com/4.32/@arcgis/core/layers/GraphicsLayer.js";
-import RouteTask from "https://js.arcgis.com/4.32/@arcgis/core/tasks/RouteTask.js";
-import RouteParameters from "https://js.arcgis.com/4.32/@arcgis/core/tasks/support/RouteParameters.js";
-import FeatureSet from "https://js.arcgis.com/4.32/@arcgis/core/tasks/support/FeatureSet.js";
+import RouteTask from "https://js.arcgis.com/4.32/@arcgis/core/rest/support/RouteTask.js";
+import RouteParameters from "https://js.arcgis.com/4.32/@arcgis/core/rest/support/RouteParameters.js";
+import FeatureSet from "https://js.arcgis.com/4.32/@arcgis/core/rest/support/FeatureSet.js";
 import Point from "https://js.arcgis.com/4.32/@arcgis/core/geometry/Point.js";
 
 // Step 1: OAuth Setup

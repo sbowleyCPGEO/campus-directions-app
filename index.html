@@ -80,11 +80,11 @@
     // Add RouteLayer to the map
     map.add(routeLayer);
 
-    // Set up the Directions widget
+    // Set up the Directions widget with Esri's World Routing Service
     const directionsWidget = new Directions({
       view: view,
       routeServiceUrls: [
-        "https://route.arcgis.com/arcgis/rest/services/World" // Updated Esri World Routing Service URL
+        "https://route.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World" // Esri World Routing Service URL
       ],
       travelMode: TravelMode.walking, // Walking directions by default
       stops: [startPoint, endPoint], // Define stops for the route
